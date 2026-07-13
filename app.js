@@ -16,15 +16,17 @@ function normalizeAliases(text) {
     .filter(Boolean);
 }
 
-function seededShuffleRandom(arr) {
-  // shuffle del navegador (no determinista entre sesiones; suficiente para repartir en mesa)
+function secureShuffle(arr) {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const r = new Uint32Array(1);
+    crypto.getRandomValues(r);
+    const j = r[0] % (i + 1);
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
 }
+
 
 function computeRoleCounts(n) {
   const lobos = (n <= 11) ? 2 : 3; // 6-11 => 2, 12+ => 3
@@ -117,6 +119,7 @@ function showRevealModal({ playerName, playerIndex, roleType }) {
 
   modal.classList.remove("hidden");
 }
+
 
 function renderBoard(players, assignedRoles) {
   const board = document.getElementById("board");
@@ -212,7 +215,7 @@ async function init() {
 
 
     const roleList = roleListForN(n);
-    const shuffledRoles = seededShuffleRandom(roleList);
+    const shuffledRoles = secureShuffle(roleList);
 
     localStorage.setItem("players", JSON.stringify(players));
     localStorage.setItem("assignedRoles", JSON.stringify(shuffledRoles));
@@ -225,4 +228,3 @@ async function init() {
 }
 
 init();
-
