@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Los hombres lobo de Castronegro - Repartidor</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Los hombres-lobo de Castronegro</h1>
+
+    <section class="panel">
+      <h2>Configurar partida</h2>
+
+      <form id="setupForm" class="grid">
+
+
+        <div class="field">
+          <label for="aliases">Alias/nombres de jugadores (uno por línea)</label>
+          <textarea id="aliases" rows="8" placeholder="Alicia&#10;Bruno&#10;Carla&#10;..." required></textarea>
+          <div class="help">El número de líneas debe coincidir con el total.</div>
+        </div>
+
+        <div class="actions">
+          <button type="submit">Repartir roles</button>
+          <button type="button" id="resetBtn" class="secondary">Desbloquear visualización (sin volver a repartir)</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="boardWrap" class="panel hidden">
+      <h2>Reparto de roles</h2>
+      <p class="note">Pulsa un jugador para ver su QR y su enlace. Cuando se haya revelado, ya no se mostrará de nuevo.</p>
+      <div id="board" class="board" aria-live="polite"></div>
+    </section>
+
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modalCard">
+        <div class="modalHeader">
+          <div>
+            <div class="modalTitle" id="modalPlayerName"></div>
+            <div class="modalSubtitle" id="modalPlayerIndex"></div>
+          </div>
+          <button id="closeModalBtn" class="iconBtn" aria-label="Cerrar">✕</button>
+        </div>
+
+        <div class="modalBody">
+          <div class="qrWrap">
+            <div id="qr"></div>
+          </div>
+
+          <div class="linkWrap">
+            <label class="label">Hipervínculo</label>
+            <input id="revealLink" type="text" readonly />
+            <div class="actions">
+              <button id="copyBtn" type="button">Copiar enlace</button>
+              <a id="openRoleLink" class="secondaryBtn" target="_blank" rel="noopener noreferrer">Abrir página del personaje</a>
+            </div>
+            <div id="copyMsg" class="copyMsg" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- QR -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+
