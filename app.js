@@ -88,6 +88,7 @@ function showRevealModal({ playerName, playerIndex, roleType }) {
   qrEl.innerHTML = "";
 
   const url = roles[roleType].page;
+  const url = new URL(relativePage, window.location.href).toString();
 
   modalPlayerName.textContent = playerName;
   modalPlayerIndex.textContent = `Jugador #${playerIndex + 1}`;
